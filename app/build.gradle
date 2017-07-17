@@ -1,0 +1,37 @@
+ apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    useLibrary 'org.apache.http.legacy'
+    defaultConfig {
+        applicationId "xyz.monkeytong.hongbao"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 5
+        versionName "v4.0.1"
+    }
+
+    signingConfigs {
+        releaseConfig {
+            storeFile file("../monkeytong.jks")
+            storePassword project.hasProperty("KEYSTORE_PASS") ? KEYSTORE_PASS : System.getenv("KEYSTORE_PASS")
+            keyAlias project.hasProperty("ALIAS_NAME") ? ALIAS_NAME : System.getenv("ALIAS_NAME")
+            keyPassword project.hasProperty("ALIAS_PASS") ? ALIAS_PASS : System.getenv("ALIAS_PASS")
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
+        }
+    }
+}
+
+ dependencies {
+     compile fileTree(include: ['*.jar'], dir: 'libs')
+     compile 'com.android.support:support-v4:25.1.0'
+     compile 'com.android.support:appcompat-v7:25.1.0'
+ }
