@@ -114,7 +114,7 @@ public class MainActivity extends Activity implements AccessibilityManager.Acces
     }
 
     /**
-     * 更新当前 HongbaoService 显示状态
+     * 更新当前 是否开启插件，主界面点击开启插件状态显示
      */
     private void updateServiceStatus() {
         if (isServiceEnabled()) {
