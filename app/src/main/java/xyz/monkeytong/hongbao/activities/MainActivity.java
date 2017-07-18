@@ -16,9 +16,8 @@ import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import xyz.monkeytong.hongbao.R;
-import xyz.monkeytong.hongbao.utils.ConnectivityUtil;
-import xyz.monkeytong.hongbao.utils.UpdateTask;
 
 import java.util.List;
 
@@ -80,9 +79,6 @@ public class MainActivity extends Activity implements AccessibilityManager.Acces
         super.onResume();
 
         updateServiceStatus();
-        // Check for update when WIFI is connected or on first time.
-        if (ConnectivityUtil.isWifi(this) || UpdateTask.count == 0)
-            new UpdateTask(this, false).update();
     }
 
     @Override
@@ -102,22 +98,6 @@ public class MainActivity extends Activity implements AccessibilityManager.Acces
             e.printStackTrace();
         }
 
-    }
-
-    public void openGitHub(View view) {
-        Intent webViewIntent = new Intent(this, WebViewActivity.class);
-        webViewIntent.putExtra("title", getString(R.string.webview_github_title));
-        webViewIntent.putExtra("url", "https://github.com/geeeeeeeeek/WeChatLuckyMoney");
-        startActivity(webViewIntent);
-    }
-
-    public void openUber(View view) {
-        Intent webViewIntent = new Intent(this, WebViewActivity.class);
-        webViewIntent.putExtra("title", getString(R.string.webview_uber_title));
-        String[] couponList = new String[]{"https://dc.tt/oTLtXH2BHsD", "https://dc.tt/ozFJHDnfLky"};
-        int index = (int) (Math.random() * 2);
-        webViewIntent.putExtra("url", couponList[index]);
-        startActivity(webViewIntent);
     }
 
     public void openSettings(View view) {
