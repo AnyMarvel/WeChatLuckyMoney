@@ -48,7 +48,7 @@ public class MainActivity extends Activity implements AccessibilityManager.Acces
     }
 
     /**
-     * 设置PreferenceManager默认布局
+     * 程序一运行时就将defaultValue存储到sp中，并且不可以重新将sp中的值还原成默认值。
      */
     private void explicitlyLoadPreferences() {
         PreferenceManager.setDefaultValues(this, R.xml.general_preferences, false);
@@ -131,6 +131,7 @@ public class MainActivity extends Activity implements AccessibilityManager.Acces
 
     /**
      * 获取 HongbaoService 是否启用状态
+     * 判断accessibilityService是否运行
      *
      * @return
      */

@@ -339,12 +339,20 @@ public class HongbaoService extends AccessibilityService implements SharedPrefer
         return lastNode;
     }
 
+    /**
+     * 系统成功绑定该服务时被触发,也就是当你在设置中开启相应的服务,系统成功的绑定了该服务时会触发,通常我们可以在这里做一些初始化操作
+     *
+     * 初始化是否开启息屏抢红包功能
+     */
     @Override
     public void onServiceConnected() {
         super.onServiceConnected();
         this.watchFlagsFromPreference();
     }
 
+    /**
+     * 从SP中获取pref_watch_on_lock(息屏抢红包是否开启)
+     */
     private void watchFlagsFromPreference() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
