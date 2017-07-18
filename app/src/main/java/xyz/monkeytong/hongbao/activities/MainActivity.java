@@ -47,6 +47,9 @@ public class MainActivity extends Activity implements AccessibilityManager.Acces
         updateServiceStatus();
     }
 
+    /**
+     * 设置PreferenceManager默认布局
+     */
     private void explicitlyLoadPreferences() {
         PreferenceManager.setDefaultValues(this, R.xml.general_preferences, false);
     }
