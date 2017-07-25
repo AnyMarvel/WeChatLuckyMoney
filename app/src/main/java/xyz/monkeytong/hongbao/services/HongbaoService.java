@@ -31,7 +31,7 @@ public class HongbaoService extends AccessibilityService implements SharedPrefer
     private static final String WECHAT_VIEW_SELF_CH = "查看红包";
     private static final String WECHAT_VIEW_OTHERS_CH = "领取红包";
     private static final String WECHAT_NOTIFICATION_TIP = "[微信红包]";
-    private static final String WECHAT_LUCKMONEY_RECEIVE_ACTIVITY = "LuckyMoneyReceiveUI";
+    private static final String WECHAT_LUCKMONEY_RECEIVE_ACTIVITY = "luckymoney";
     private static final String WECHAT_LUCKMONEY_DETAIL_ACTIVITY = "LuckyMoneyDetailUI";
     private static final String WECHAT_LUCKMONEY_GENERAL_ACTIVITY = "LauncherUI";
     private static final String WECHAT_LUCKMONEY_CHATTING_ACTIVITY = "ChattingUI";
@@ -45,6 +45,7 @@ public class HongbaoService extends AccessibilityService implements SharedPrefer
 
     private PowerUtil powerUtil;
     private SharedPreferences sharedPreferences;
+
 
     /**
      * AccessibilityEvent
@@ -216,24 +217,15 @@ public class HongbaoService extends AccessibilityService implements SharedPrefer
 
     }
 
+    //打开钱包后进行查找
     private AccessibilityNodeInfo findOpenButton(AccessibilityNodeInfo node) {
         if (node == null)
             return null;
 
-        //非layout元素
-        if (node.getChildCount() == 0) {
-            if ("android.widget.Button".equals(node.getClassName()))
-                return node;
-            else
-                return null;
-        }
-
         //layout元素，遍历找button
-        AccessibilityNodeInfo button;
         for (int i = 0; i < node.getChildCount(); i++) {
-            button = findOpenButton(node.getChild(i));
-            if (button != null)
-                return button;
+            if ("android.widget.Button".equals(node.getChild(i).getClassName()))
+                return node.getChild(i);
         }
         return null;
     }
@@ -262,12 +254,16 @@ public class HongbaoService extends AccessibilityService implements SharedPrefer
         }
 
         /* 戳开红包，红包还没抢完，遍历节点匹配“拆红包” */
-        AccessibilityNodeInfo node2 = findOpenButton(this.rootNodeInfo);
-        if (node2 != null && "android.widget.Button".equals(node2.getClassName()) && currentActivityName.contains(WECHAT_LUCKMONEY_RECEIVE_ACTIVITY)) {
-            mUnpackNode = node2;
-            mUnpackCount += 1;
-            return;
+        if (mLuckyMoneyPicked) {
+            System.out.println("currentActivityName:" + currentActivityName);
+            AccessibilityNodeInfo node2 = findOpenButton(this.rootNodeInfo);
+            if (node2 != null && "android.widget.Button".equals(node2.getClassName()) && currentActivityName.contains(WECHAT_LUCKMONEY_RECEIVE_ACTIVITY)) {
+                mUnpackNode = node2;
+                mUnpackCount += 1;
+                return;
+            }
         }
+
 
         /* 戳开红包，红包已被抢完，遍历节点匹配“红包详情”和“手慢了” */
         boolean hasNodes = this.hasOneOfThoseNodes(
@@ -341,7 +337,7 @@ public class HongbaoService extends AccessibilityService implements SharedPrefer
 
     /**
      * 系统成功绑定该服务时被触发,也就是当你在设置中开启相应的服务,系统成功的绑定了该服务时会触发,通常我们可以在这里做一些初始化操作
-     *
+     * <p>
      * 初始化是否开启息屏抢红包功能
      */
     @Override
