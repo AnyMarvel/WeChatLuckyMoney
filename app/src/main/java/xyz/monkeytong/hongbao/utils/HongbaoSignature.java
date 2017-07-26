@@ -14,7 +14,8 @@ public class HongbaoSignature {
         try {
             /* The hongbao container node. It should be a LinearLayout. By specifying that, we can avoid text messages. */
             AccessibilityNodeInfo hongbaoNode = node.getParent();
-            if (!"android.widget.LinearLayout".equals(hongbaoNode.getClassName())) return false;
+            if (hongbaoNode != null && !"android.widget.LinearLayout".equals(hongbaoNode.getClassName()))
+                return false;
 
             /* The text in the hongbao. Should mean something. */
             String hongbaoContent = hongbaoNode.getChild(0).getText().toString();
@@ -36,12 +37,17 @@ public class HongbaoSignature {
 
             /* The sender and possible timestamp. Should mean something too. */
             String[] hongbaoInfo = getSenderContentDescriptionFromNode(messageNode);
-            if (this.getSignature(hongbaoInfo[0], hongbaoContent, hongbaoInfo[1]).equals(this.toString())) return false;
+            String temp = this.getSignature(hongbaoInfo[0], hongbaoContent, hongbaoInfo[1]);
 
             /* So far we make sure it's a valid new coming hongbao. */
+            //判断与上次的红包内容是否完全相符
+            if (temp != null && temp.equals(this.toString())) {
+                return false;
+            }
             this.sender = hongbaoInfo[0];
             this.time = hongbaoInfo[1];
             this.content = hongbaoContent;
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,7 +85,8 @@ public class HongbaoSignature {
             AccessibilityNodeInfo thisNode = node.getChild(i);
             if ("android.widget.ImageView".equals(thisNode.getClassName()) && "unknownSender".equals(result[0])) {
                 CharSequence contentDescription = thisNode.getContentDescription();
-                if (contentDescription != null) result[0] = contentDescription.toString().replaceAll("头像$", "");
+                if (contentDescription != null)
+                    result[0] = contentDescription.toString().replaceAll("头像$", "");
             } else if ("android.widget.TextView".equals(thisNode.getClassName()) && "unknownTime".equals(result[1])) {
                 CharSequence thisNodeText = thisNode.getText();
                 if (thisNodeText != null) result[1] = thisNodeText.toString();
