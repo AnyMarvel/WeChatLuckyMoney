@@ -42,8 +42,11 @@
     <string name="help_and_feedback">帮助与反馈</string>
     <string name="help_hint">前往GitHub项目主页提交issue</string>
     <string name="labs">实验功能</string>
+    <string name="enhanced">增强功能</string>
     <string name="snatch_on_lockscreen">息屏抢红包</string>
     <string name="snatch_on_lockscreen_hint">保持30分钟后台活跃,可能会极大增加电量消耗,请谨慎使用</string>
+    <string name="unlimited_refresh_settings">无限制刷新开关</string>
+    <string name="unlimited_refresh_settings_hint">开关打开后会无限制刷新列表最后一个红包内容,持续点击打开（为防止一个人短时间内重复发送相同内容红包）</string>
     <string name="auto_reply">拆开红包后自动回复</string>
     <string name="checking_new_version">正在检查新版本……</string>
     <string name="delay_instantly">立即</string>

@@ -10,7 +10,7 @@ public class HongbaoSignature {
     public String sender, content, time, contentDescription = "", commentString;
     public boolean others;
 
-    public boolean generateSignature(AccessibilityNodeInfo node, String excludeWords) {
+    public boolean generateSignature(AccessibilityNodeInfo node, String excludeWords, Boolean Unlimited) {
         try {
             /* The hongbao container node. It should be a LinearLayout. By specifying that, we can avoid text messages. */
             AccessibilityNodeInfo hongbaoNode = node.getParent();
@@ -41,7 +41,7 @@ public class HongbaoSignature {
 
             /* So far we make sure it's a valid new coming hongbao. */
             //判断与上次的红包内容是否完全相符
-            if (temp != null && temp.equals(this.toString())) {
+            if (temp != null && temp.equals(this.toString()) && !Unlimited) {
                 return false;
             }
             this.sender = hongbaoInfo[0];

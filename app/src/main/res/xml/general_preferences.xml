@@ -43,20 +43,7 @@
             android:summary="@string/pref_watch_exclude_words_summary"
             android:title="@string/skip_phrases" />
     </PreferenceCategory>
-    <!--<PreferenceCategory-->
-        <!--android:layout="@layout/preference_category"-->
-        <!--android:title="@string/about">-->
-        <!--<Preference-->
-            <!--android:key="pref_etc_check_update"-->
-            <!--android:layout="@layout/preference_checkbox"-->
-            <!--android:summary="http://dwz.cn/WeChatLuckyMoney"-->
-            <!--android:title="@string/check_new_version" />-->
-        <!--<Preference-->
-            <!--android:key="pref_etc_issue"-->
-            <!--android:layout="@layout/preference_checkbox"-->
-            <!--android:summary="@string/help_hint"-->
-            <!--android:title="@string/help_and_feedback" />-->
-    <!--</PreferenceCategory>-->
+
     <PreferenceCategory
         android:layout="@layout/preference_category"
         android:title="@string/labs">
@@ -66,5 +53,16 @@
             android:layout="@layout/preference_checkbox"
             android:summary="@string/snatch_on_lockscreen_hint"
             android:title="@string/snatch_on_lockscreen" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preference_category"
+        android:title="@string/enhanced">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_watch_unlimited_refresh"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/unlimited_refresh_settings_hint"
+            android:title="@string/unlimited_refresh_settings" />
     </PreferenceCategory>
 </PreferenceScreen>

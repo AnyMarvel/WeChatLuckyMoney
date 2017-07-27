@@ -40,7 +40,7 @@ public class HongbaoService extends AccessibilityService implements SharedPrefer
     private AccessibilityNodeInfo rootNodeInfo, mReceiveNode, mUnpackNode;
     private boolean mLuckyMoneyPicked, mLuckyMoneyReceived;
     private int mUnpackCount = 0;
-    private boolean mMutex = false, mListMutex = false;
+    private boolean mMutex = false, mListMutex = false, Unlimited = false;
     private HongbaoSignature signature = new HongbaoSignature();
 
     private PowerUtil powerUtil;
@@ -55,7 +55,7 @@ public class HongbaoService extends AccessibilityService implements SharedPrefer
     public void onAccessibilityEvent(AccessibilityEvent event) {
         System.out.println("AccessibilityEvent" + event.getEventType());
         if (sharedPreferences == null) return;
-
+        Unlimited = sharedPreferences.getBoolean("pref_watch_unlimited_refresh", false);
         setCurrentActivityName(event);
 
         /* 检测通知消息 */
@@ -249,7 +249,7 @@ public class HongbaoService extends AccessibilityService implements SharedPrefer
                 (currentActivityName.contains(WECHAT_LUCKMONEY_CHATTING_ACTIVITY)
                         || currentActivityName.contains(WECHAT_LUCKMONEY_GENERAL_ACTIVITY))) {
             String excludeWords = sharedPreferences.getString("pref_watch_exclude_words", "");
-            boolean isSignature = this.signature.generateSignature(node1, excludeWords);
+            boolean isSignature = this.signature.generateSignature(node1, excludeWords, Unlimited);
             if (isSignature) {
                 mLuckyMoneyReceived = true;
                 mReceiveNode = node1;
